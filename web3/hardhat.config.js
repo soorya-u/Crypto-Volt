@@ -1,4 +1,5 @@
 require("@matterlabs/hardhat-zksync-solc");
+require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -11,12 +12,16 @@ module.exports = {
       },
     },
   },
-  defaultNetwork: "running",
-  running: {
-    url: "http://127.0.0.1:8545/",
-    chainId: 1337,
+  defaultNetwork: "localganache",
+  localganache: {
+    url: process.env.PROVIDER_URL,
+    accounts: [`0x${process.env.PRIVATE_KEY}`],
   },
   networks: {
+    localganache: {
+      url: process.env.PROVIDER_URL,
+      accounts: [`0x${process.env.PRIVATE_KEY}`],
+    },
     zksync_testnet: {
       url: "https://zksync2-testnet.zksync.dev",
       ethNetwork: "goerli",
@@ -41,6 +46,14 @@ module.exports = {
   },
   solidity: {
     version: "0.8.17",
+    defaultNetwork: "localganache",
+    networks: {
+      hardhat: {},
+      localganache: {
+        url: process.env.PROVIDER_URL,
+        accounts: [`0x${process.env.PRIVATE_KEY}`],
+      },
+    },
     settings: {
       optimizer: {
         enabled: true,

@@ -44,4 +44,4 @@ yarn release
 
 ## Join our Discord!
 
-For any questions, suggestions, join our discord at [https://discord.gg/thirdweb](https://discord.gg/thirdweb).
+For any questions, suggestions, join our discord at [Deployed Contract](https://thirdweb.com/localhost/0xE9D82391fBfa2514f578BC15F9Fc01d1A92Cb105).
