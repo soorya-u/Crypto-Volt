@@ -71,7 +71,7 @@ export const StateContextProvider = (props: PropsWithChildren) => {
       deadline: c.deadline.toNumber(),
       amountCollected: ethers.utils.formatEther(c.amountCollected.toString()),
       image: c.image,
-      pid: idx,
+      pId: idx,
     }));
 
     return parsedCampaigns;
@@ -94,7 +94,7 @@ export const StateContextProvider = (props: PropsWithChildren) => {
       console.log("parsing err", err);
     }
 
-    console.log(value)
+    console.log(value);
 
     const data = await contract?.call("donateToCampaign", [+pId], {
       value,
@@ -104,6 +104,7 @@ export const StateContextProvider = (props: PropsWithChildren) => {
   };
 
   const getDonations = async (pId: string) => {
+    console.log(+pId);
     const donations = await contract?.call("getDonators", [+pId]);
 
     const numberOfDonations = donations[0].length;
