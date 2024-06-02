@@ -6,7 +6,6 @@ import {
   useConnect,
   useContractWrite,
   metamaskWallet,
-  ClaimEligibility,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 
@@ -17,9 +16,8 @@ const defaultArgs: any = {};
 const StateContext = createContext(defaultArgs);
 
 export const StateContextProvider = (props: PropsWithChildren) => {
-  const { data: contract } = useContract(
-    "0xE9D82391fBfa2514f578BC15F9Fc01d1A92Cb105"
-  );
+  const contractId = import.meta.env.VITE_CONTRACT_ID;
+  const { data: contract } = useContract(`${contractId}`);
 
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
