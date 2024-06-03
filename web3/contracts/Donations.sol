@@ -2,6 +2,11 @@
 pragma solidity ^0.8.9;
 
 contract Donations {
+    struct Donation {
+        address donator;
+        uint256 amount;
+    }
+
     struct Campaign {
         address owner;
         string title;
@@ -10,8 +15,7 @@ contract Donations {
         uint256 deadline;
         uint256 amountCollected;
         string image;
-        address[] donators;
-        uint256[] donations;
+        Donation[] donations;
     }
 
     mapping(uint256 => Campaign) public campaigns;
@@ -48,10 +52,13 @@ contract Donations {
 
     function donateToCampaign(uint256 _id) public payable {
         uint256 amount = msg.value;
-
         Campaign storage campaign = campaigns[_id];
-        campaign.donators.push(msg.sender);
-        campaign.donations.push(amount);
+        Donation memory donation = Donation({
+            donator: msg.sender,
+            amount: amount
+        });
+
+        campaign.donations.push(donation);
 
         (bool sent, ) = payable(campaign.owner).call{value: amount}("");
 
@@ -60,18 +67,15 @@ contract Donations {
         }
     }
 
-    function getDonators(
-        uint256 _id
-    ) public view returns (address[] memory, uint256[] memory) {
-        return (campaigns[_id].donators, campaigns[_id].donations);
+    function getDonators(uint256 _id) public view returns (Donation[] memory) {
+        return campaigns[_id].donations;
     }
 
     function getCampaigns() public view returns (Campaign[] memory) {
         Campaign[] memory allCampaigns = new Campaign[](numberOfCampaigns);
 
-        for (uint i = 0; i < numberOfCampaigns; i++) {
+        for (uint256 i = 0; i < numberOfCampaigns; i++) {
             Campaign storage item = campaigns[i];
-
             allCampaigns[i] = item;
         }
 

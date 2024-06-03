@@ -85,14 +85,7 @@ export const StateContextProvider = (props: PropsWithChildren) => {
   };
 
   const donate = async (pId: string, amount: string) => {
-    let value;
-    try {
-      value = ethers.utils.parseEther(amount);
-    } catch (err) {
-      console.log("parsing err", err);
-    }
-
-    console.log(value);
+    const value = ethers.utils.parseEther(amount);
 
     const data = await contract?.call("donateToCampaign", [+pId], {
       value,
@@ -105,16 +98,10 @@ export const StateContextProvider = (props: PropsWithChildren) => {
     console.log(+pId);
     const donations = await contract?.call("getDonators", [+pId]);
 
-    const numberOfDonations = donations[0].length;
-
-    const parsedDonations = [];
-
-    for (let i = 0; i < numberOfDonations; i++) {
-      parsedDonations.push({
-        donator: donations[0][i],
-        donation: ethers.utils.formatEther(donations[1][i]).toString(),
-      });
-    }
+    const parsedDonations = donations.map((d: any) => ({
+      donator: d.donator,
+      donation: ethers.utils.formatEther(d.amount).toString(),
+    }));
 
     return parsedDonations;
   };
