@@ -6,6 +6,7 @@ type FormFieldProps = {
   inputType: string;
   isTextArea: boolean;
   value: string;
+  isImage?: boolean;
   handleChange: (
     e:
       | React.ChangeEvent<HTMLTextAreaElement>
@@ -19,6 +20,7 @@ const FormField = ({
   inputType,
   isTextArea,
   value,
+  isImage,
   handleChange,
 }: Partial<FormFieldProps>) => {
   return (
@@ -30,7 +32,7 @@ const FormField = ({
       )}
       {isTextArea ? (
         <textarea
-          required
+          required={!isImage}
           value={value}
           onChange={handleChange}
           rows={10}
@@ -39,7 +41,7 @@ const FormField = ({
         />
       ) : (
         <input
-          required
+          required={!isImage}
           value={value}
           onChange={handleChange}
           type={inputType}

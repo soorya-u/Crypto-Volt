@@ -5,7 +5,6 @@ import { ethers } from "ethers";
 import { useStateContext } from "../context";
 import { money } from "../assets";
 import { CustomButton, FormField, Loader } from "../components";
-import { checkIfImage } from "../utils";
 
 const CreateCampaign = () => {
   const navigate = useNavigate();
@@ -32,20 +31,19 @@ const CreateCampaign = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    checkIfImage(form.image, async (exists) => {
-      if (exists) {
-        setIsLoading(true);
-        await createCampaign({
-          ...form,
-          target: ethers.utils.parseUnits(form.target, 18),
-        });
-        setIsLoading(false);
-        navigate("/");
-      } else {
-        alert("Provide valid image URL");
-        setForm({ ...form, image: "" });
-      }
+    const f = form;
+
+    if (f.image === "")
+      f.image =
+        "https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjIxMWJhdGNoMTEta2liLTMwNC1jaGFyaXR5XzIuanBn.jpg";
+
+    setIsLoading(true);
+    await createCampaign({
+      ...f,
+      target: ethers.utils.parseUnits(f.target, 18),
     });
+    setIsLoading(false);
+    navigate("/");
   };
 
   return (
@@ -115,7 +113,8 @@ const CreateCampaign = () => {
         </div>
 
         <FormField
-          labelName="Campaign image *"
+          isImage
+          labelName="Campaign image (optional)"
           placeholder="Place image URL of your campaign"
           inputType="url"
           value={form.image}
