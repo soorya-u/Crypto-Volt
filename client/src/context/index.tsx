@@ -6,6 +6,7 @@ import {
   useConnect,
   useContractWrite,
   metamaskWallet,
+  useDisconnect,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 
@@ -21,12 +22,12 @@ export const StateContextProvider = (props: PropsWithChildren) => {
 
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
-    // @ts-ignore
     "createCampaign"
   );
 
   const address = useAddress();
   const connect = useConnect();
+  const disconnect = useDisconnect();
 
   const metaMaskConnect = () => connect(metamaskConfig);
 
@@ -144,6 +145,7 @@ export const StateContextProvider = (props: PropsWithChildren) => {
         getDonations,
         multiSenderByValue,
         multiSenderEqually,
+        disconnect,
       }}
     >
       {props.children}

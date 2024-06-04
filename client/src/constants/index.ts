@@ -16,35 +16,34 @@ type NavLinks = {
 
 export const navlinks: NavLinks[] = [
   {
-    name: "dashboard",
+    name: "Dashboard",
     imgUrl: dashboard,
     link: "/",
   },
   {
-    name: "campaign",
+    name: "Campaign",
     imgUrl: createCampaign,
     link: "/create-campaign",
   },
   {
-    name: "payment",
+    name: "MultiSender",
     imgUrl: payment,
     link: "/multi-sender",
   },
   {
-    name: "withdraw",
+    name: "Withdraw",
     imgUrl: withdraw,
     link: "/",
     disabled: true,
   },
   {
-    name: "profile",
+    name: "Profile",
     imgUrl: profile,
     link: "/profile",
   },
   {
-    name: "logout",
+    name: "Logout",
     imgUrl: logout,
     link: "/",
-    disabled: true,
   },
 ];
