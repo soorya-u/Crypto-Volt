@@ -95,7 +95,6 @@ export const StateContextProvider = (props: PropsWithChildren) => {
   };
 
   const getDonations = async (pId: string) => {
-    console.log(+pId);
     const donations = await contract?.call("getDonators", [+pId]);
 
     const parsedDonations = donations.map((d: any) => ({
@@ -104,6 +103,32 @@ export const StateContextProvider = (props: PropsWithChildren) => {
     }));
 
     return parsedDonations;
+  };
+
+  const multiSenderByValue = async (address: string[], amount: string[]) => {
+    const value = amount.map((v) => ethers.utils.parseEther(`${v}`));
+    const sum = amount.reduce(
+      (accumulator, currentValue) => accumulator + +currentValue,
+      0
+    );
+
+    const totalSum = ethers.utils.parseEther(`${sum}`);
+
+    const data = await contract?.call("multiSenderByValue", [address, value], {
+      value: totalSum,
+    });
+
+    return data;
+  };
+
+  const multiSenderEqually = async (address: string[], amount: string) => {
+    const totalSum = ethers.utils.parseEther(`${+amount * address.length}`);
+
+    const data = await contract?.call("multiSenderEqually", [address], {
+      value: totalSum,
+    });
+
+    return data;
   };
 
   return (
@@ -117,6 +142,8 @@ export const StateContextProvider = (props: PropsWithChildren) => {
         getUserCampaigns,
         donate,
         getDonations,
+        multiSenderByValue,
+        multiSenderEqually,
       }}
     >
       {props.children}

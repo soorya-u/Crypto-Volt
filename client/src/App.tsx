@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { CampaignDetails, CreateCampaign, Home, Profile } from "./pages";
+import { CampaignDetails, CreateCampaign, Home, Profile, Multisender } from "./pages";
 import { Navbar, Sidebar } from "./components";
 export default function App() {
   return (
@@ -16,6 +16,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-campaign" element={<CreateCampaign />} />
           <Route path="/campaign-details/:id" element={<CampaignDetails />} />
+          \<Route path="/multi-sender" element={<Multisender />} />
         </Routes>
       </div>
     </main>

@@ -28,8 +28,7 @@ export const navlinks: NavLinks[] = [
   {
     name: "payment",
     imgUrl: payment,
-    link: "/",
-    disabled: true,
+    link: "/multi-sender",
   },
   {
     name: "withdraw",
