@@ -7,6 +7,7 @@ type FormFieldProps = {
   isTextArea: boolean;
   value: string;
   isImage?: boolean;
+  disabled?: boolean;
   handleChange: (
     e:
       | React.ChangeEvent<HTMLTextAreaElement>
@@ -21,6 +22,7 @@ const FormField = ({
   isTextArea,
   value,
   isImage,
+  disabled,
   handleChange,
 }: Partial<FormFieldProps>) => {
   return (
@@ -37,7 +39,8 @@ const FormField = ({
           onChange={handleChange}
           rows={10}
           placeholder={placeholder}
-          className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px]"
+          disabled={disabled}
+          className="py-[15px] sm:px-[25px] px-[15px] bg-gray-700/20 outline-none border-[1px] border-[#3a3a43]  font-epilogue text-white text-[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px] hover:border-green-500/60 focus:border-green-500 disabled:opacity-60 disabled:hover:border-[#3a3a43]"
         />
       ) : (
         <input
@@ -47,7 +50,8 @@ const FormField = ({
           type={inputType}
           step="0.1"
           placeholder={placeholder}
-          className="py-[15px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px]"
+          disabled={disabled}
+          className="py-[15px] sm:px-[25px] px-[15px] bg-gray-700/20 outline-none border-[1px] border-[#3a3a43]  font-epilogue text-white text-[14px] placeholder:text-[#4b5264] rounded-[10px] sm:min-w-[300px] hover:border-green-500/60 focus:border-green-500 disabled:opacity-60 disabled:hover:border-[#3a3a43]"
         />
       )}
     </label>

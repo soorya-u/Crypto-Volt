@@ -1,90 +1,111 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
 import { useStateContext } from "../context";
-import { useNavigate } from "react-router-dom";
+import { CustomButton, MultiSenderInput } from "../components";
+
+type InputType = {
+  address: string;
+  amount: string;
+};
 
 export default function Multisender() {
-  const [reciever1, setReciever1] = useState("");
-  const [reciever2, setReciever2] = useState("");
-  const [reciever3, setReciever3] = useState("");
-  const [reciever4, setReciever4] = useState("");
-  const [amount1, setAmount1] = useState("");
-  const [amount2, setAmount2] = useState("");
-  const [amount3, setAmount3] = useState("");
-  const [amount4, setAmount4] = useState("");
-  const navigate = useNavigate();
-  const { multiSenderEqually } = useStateContext();
+  const { multiSenderEqually, multiSenderByValue } = useStateContext();
+
+  const [isEqualAmount, setIsEqualAmount] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [input, setInput] = useState<InputType[]>([
+    { address: "", amount: "" },
+  ]);
+
+  useEffect(() => {
+    if (!sent) return;
+    setInput([{ address: "", amount: "" }]);
+    const t = setTimeout(() => setSent(false), 3000);
+
+    return () => clearTimeout(t);
+  }, [sent]);
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setInput((prev) => [...prev, { address: "", amount: "" }]);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const a = await multiSenderEqually(
-      [reciever1, reciever2, reciever3, reciever4],
-      amount1
-    );
+    const allAddress = input.map((i) => i.address);
+    const allAmount = input.map((i) => i.amount);
 
-    navigate("/");
+    const data = isEqualAmount
+      ? await multiSenderEqually(allAddress, allAmount[0])
+      : await multiSenderByValue(allAddress, allAmount);
+
+    if (data.receipt.confirmations === 1) {
+      setSent(true);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <div className="flex gap-4">
-        <input
-          className="border border-black "
-          type="text"
-          value={reciever1}
-          onChange={(e) => setReciever1(e.target.value)}
-        />
-        <input
-          type="number"
-          value={amount1}
-          onChange={(e) => setAmount1(e.target.value)}
-        />
+    <>
+      <div className="relative flex flex-col gap-y-4 my-2">
+        <h1 className="pl-4 font-epilogue font-semibold text-[18px] text-white text-left">
+          Multi-Sender
+        </h1>
+
+        <h3 className="pl-4 font-epilogue font-semibold text-[16px] text-white text-left">
+          Enter the Address and Amount to be Sent
+        </h3>
+
+        <label htmlFor="isEqualSender" className="flex pl-4 items-center">
+          <input
+            value={`${isEqualAmount}`}
+            onChange={() => setIsEqualAmount((prev) => !prev)}
+            type="checkbox"
+            name="isEqualSender"
+            className="accent-green-500 outline-none"
+          />
+          <h3 className="pl-4 font-epilogue font-semibold text-[16px] text-white text-left">
+            Send the Money Equally
+          </h3>
+        </label>
+        {sent && (
+          <div className="absolute z-40 -top-20 left-0 right-0 mx-auto bg-[#4acd8d] opacity-90 border-[2px] border-white w-[80%] h-16 rounded-lg flex justify-center items-center">
+            <p className="font-epilogue font-semibold text-[16px] leading-[26px] text-white">
+              Transaction has been Completed
+            </p>
+          </div>
+        )}
       </div>
-      <div className="flex gap-4">
-        <input
-          className="border border-black "
-          type="text"
-          value={reciever2}
-          onChange={(e) => setReciever2(e.target.value)}
-        />
-        <input
-          disabled
-          type="number"
-          value={amount2}
-          onChange={(e) => setAmount2(e.target.value)}
-        />
-      </div>
-      <div className="flex gap-4">
-        <input
-          className="border border-black "
-          type="text"
-          value={reciever3}
-          onChange={(e) => setReciever3(e.target.value)}
-        />
-        <input
-          disabled
-          type="number"
-          value={amount3}
-          onChange={(e) => setAmount3(e.target.value)}
-        />
-      </div>
-      <div className="flex gap-4">
-        <input
-          className="border border-black "
-          type="text"
-          value={reciever4}
-          onChange={(e) => setReciever4(e.target.value)}
-        />
-        <input
-          disabled
-          type="number"
-          value={amount4}
-          onChange={(e) => setAmount4(e.target.value)}
-        />
-      </div>
-      <button className="border border-red-500 text-white" type="submit">
-        Submit
-      </button>
-    </form>
+
+      <form onSubmit={handleSubmit} className="flex flex-col w-full">
+        <div className="w-full flex flex-col gap-4">
+          {input.map((val, idx) => (
+            <MultiSenderInput
+              key={idx}
+              idx={idx}
+              total={input.length}
+              value={val}
+              setValue={setInput}
+              isEqualAmount={isEqualAmount}
+            />
+          ))}
+          <div className="flex items-center gap-8 py-4">
+            <CustomButton
+              title="Send ETH"
+              btnType="submit"
+              styles="bg-green-500 outline-none"
+            />
+            <button
+              onClick={handleClick}
+              className="size-10 flex justify-center items-center aspect-square rounded-sm bg-green-500/80 hover:bg-green-500 outline-none"
+            >
+              <FontAwesomeIcon className="flex-1 size-4 p-2" icon={faPlus} />
+            </button>
+          </div>
+        </div>
+      </form>
+    </>
   );
 }
