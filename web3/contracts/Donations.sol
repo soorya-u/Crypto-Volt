@@ -8,6 +8,12 @@ contract Donations {
         uint256 amount;
     }
 
+    struct Payment {
+        string name;
+        address account;
+        uint256 amount;
+    }
+
     struct Campaign {
         address owner;
         string title;
@@ -20,11 +26,14 @@ contract Donations {
     }
 
     mapping(uint256 => Campaign) public campaigns;
+    mapping(uint256 => Payment) public payments;
 
     uint256 public numberOfCampaigns = 0;
+    uint256 public numberOfPayments = 0;
 
     function multiSenderEqually(
-        address payable[] calldata _address
+        string[] calldata _name,
+        address[] calldata _address
     ) external payable {
         uint16 length = uint16(_address.length);
         uint256 value = msg.value / length;
@@ -32,10 +41,17 @@ contract Donations {
         for (uint16 i = 0; i < length; i++) {
             (bool sent, ) = payable(_address[i]).call{value: value}("");
             if (!sent) break;
+            payments[numberOfPayments] = Payment({
+                name: _name[i],
+                account: _address[i],
+                amount: value
+            });
+            numberOfPayments++;
         }
     }
 
     function multiSenderByValue(
+        string[] calldata _name,
         address[] calldata _address,
         uint256[] calldata _value
     ) external payable {
@@ -44,7 +60,23 @@ contract Donations {
         for (uint16 i = 0; i < length; i++) {
             (bool sent, ) = payable(_address[i]).call{value: _value[i]}("");
             if (!sent) break;
+            payments[numberOfPayments] = Payment({
+                name: _name[i],
+                account: _address[i],
+                amount: _value[i]
+            });
+            numberOfPayments++;
         }
+    }
+
+    function getAllPayments() public view returns (Payment[] memory) {
+        Payment[] memory allPayments = new Payment[](numberOfPayments);
+
+        for (uint256 i = 0; i < numberOfPayments; i++) {
+            Payment memory item = payments[i];
+            allPayments[i] = item;
+        }
+        return allPayments;
     }
 
     function createCampaign(
