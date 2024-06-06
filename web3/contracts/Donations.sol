@@ -4,6 +4,7 @@ pragma solidity ^0.8.9;
 contract Donations {
     struct Donation {
         address donator;
+        string name;
         uint256 amount;
     }
 
@@ -74,11 +75,15 @@ contract Donations {
         return numberOfCampaigns - 1;
     }
 
-    function donateToCampaign(uint256 _id) public payable {
+    function donateToCampaign(
+        uint256 _id,
+        string calldata _name
+    ) public payable {
         uint256 amount = msg.value;
         Campaign storage campaign = campaigns[_id];
         Donation memory donation = Donation({
             donator: msg.sender,
+            name: _name,
             amount: amount
         });
 

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ethers } from "ethers";
 
 import { useStateContext } from "../context";
 import { CountBox, CustomButton, Loader } from "../components";
@@ -14,6 +13,7 @@ const CampaignDetails = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
+  const [name, setName] = useState("");
   const [donators, setDonators] = useState<any[]>([]);
 
   const remainingDays = daysLeft(state.deadline);
@@ -31,7 +31,7 @@ const CampaignDetails = () => {
   const handleDonate = async () => {
     setIsLoading(true);
 
-    await donate(state.pId, amount);
+    await donate(state.pId, name, amount);
 
     navigate("/");
     setIsLoading(false);
@@ -122,6 +122,7 @@ const CampaignDetails = () => {
                     key={`${item.donator}-${index}`}
                     className="flex justify-between items-center gap-4"
                   >
+                    {/* TODO: Add Donator Name */}
                     <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">
                       {index + 1}. {item.donator}
                     </p>
@@ -157,7 +158,7 @@ const CampaignDetails = () => {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
-
+              {/* TODO: Add Name */}
               <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
                 <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">
                   Back it because you believe in it.

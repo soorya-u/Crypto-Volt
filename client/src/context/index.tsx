@@ -85,10 +85,10 @@ export const StateContextProvider = (props: PropsWithChildren) => {
     return filteredCampaigns;
   };
 
-  const donate = async (pId: string, amount: string) => {
+  const donate = async (pId: string, name: string, amount: string) => {
     const value = ethers.utils.parseEther(amount);
 
-    const data = await contract?.call("donateToCampaign", [+pId], {
+    const data = await contract?.call("donateToCampaign", [+pId, name], {
       value,
     });
 
@@ -99,7 +99,8 @@ export const StateContextProvider = (props: PropsWithChildren) => {
     const donations = await contract?.call("getDonators", [+pId]);
 
     const parsedDonations = donations.map((d: any) => ({
-      donator: d.donator,
+      donatorAddress: d.donator,
+      donatorName: d.name,
       donation: ethers.utils.formatEther(d.amount).toString(),
     }));
 
