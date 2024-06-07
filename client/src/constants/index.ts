@@ -1,49 +1,35 @@
-import {
-  createCampaign,
-  dashboard,
-  logout,
-  payment,
-  profile,
-  withdraw,
-} from "../assets";
-
 type NavLinks = {
   name: string;
-  imgUrl: string;
   link: string;
-  disabled?: boolean;
 };
 
 export const navlinks: NavLinks[] = [
   {
-    name: "Dashboard",
-    imgUrl: dashboard,
+    name: "Home",
     link: "/",
   },
   {
-    name: "Campaign",
-    imgUrl: createCampaign,
+    name: "Campaigns",
+    link: "/campaigns",
+  },
+  {
+    name: "Campaign Creation",
     link: "/create-campaign",
   },
   {
     name: "MultiSender",
-    imgUrl: payment,
     link: "/multi-sender",
   },
   {
     name: "Withdraw",
-    imgUrl: withdraw,
     link: "/",
-    disabled: true,
   },
   {
     name: "Profile",
-    imgUrl: profile,
     link: "/profile",
   },
   {
     name: "Logout",
-    imgUrl: logout,
     link: "/",
   },
 ];

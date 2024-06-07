@@ -1,4 +1,4 @@
-import { useContext, createContext, PropsWithChildren, ReactNode } from "react";
+import { useContext, createContext, PropsWithChildren } from "react";
 import {
   useAddress,
   useContract,
@@ -43,9 +43,7 @@ const defaultArgs: StateContextProps = {
 
 const StateContext = createContext<StateContextProps>(defaultArgs);
 
-export const StateContextProvider = ({
-  children,
-}: PropsWithChildren) => {
+export const StateContextProvider = ({ children }: PropsWithChildren) => {
   const contractId = import.meta.env.VITE_CONTRACT_ID;
   const { data: contract } = useContract(`${contractId}`);
 

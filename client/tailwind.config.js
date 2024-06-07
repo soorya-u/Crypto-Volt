@@ -9,6 +9,14 @@ module.exports = {
   ],
   prefix: "",
   theme: {
+    screens: {
+      sm: "640px",
+      md: "768px",
+      "md-lg": "900px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -19,6 +27,7 @@ module.exports = {
     extend: {
       fontFamily: {
         epilogue: ["Epilogue", "sans-serif"],
+        major: ["Major Mono Display", "monospace"],
       },
       boxShadow: {
         secondary: "10px 10px 20px rgba(2, 2, 2, 0.25)",

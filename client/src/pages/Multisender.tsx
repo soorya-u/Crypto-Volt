@@ -6,6 +6,7 @@ import { useStateContext } from "@/context/thirdweb";
 import { CustomButton, MultiSenderInput } from "@/components/custom";
 
 type InputType = {
+  name: string;
   address: string;
   amount: string;
 };
@@ -16,12 +17,12 @@ export default function Multisender() {
   const [isEqualAmount, setIsEqualAmount] = useState(false);
   const [sent, setSent] = useState(false);
   const [input, setInput] = useState<InputType[]>([
-    { address: "", amount: "" },
+    { name: "", address: "", amount: "" },
   ]);
 
   useEffect(() => {
     if (!sent) return;
-    setInput([{ address: "", amount: "" }]);
+    setInput([{ name: "", address: "", amount: "" }]);
     const t = setTimeout(() => setSent(false), 3000);
 
     return () => clearTimeout(t);
@@ -29,12 +30,13 @@ export default function Multisender() {
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setInput((prev) => [...prev, { address: "", amount: "" }]);
+    setInput((prev) => [...prev, { name: "", address: "", amount: "" }]);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const allName = input.map((i) => i.name);
     const allAddress = input.map((i) => i.address);
     const allAmount = input.map((i) => i.amount);
 
@@ -55,7 +57,7 @@ export default function Multisender() {
         </h1>
 
         <h3 className="pl-4 font-epilogue font-semibold text-[16px] text-white text-left">
-          Enter the Address and Amount to be Sent
+          Enter the Credentials and Amount to be Sent
         </h3>
 
         <label htmlFor="isEqualSender" className="flex pl-4 items-center">
@@ -64,14 +66,14 @@ export default function Multisender() {
             onChange={() => setIsEqualAmount((prev) => !prev)}
             type="checkbox"
             name="isEqualSender"
-            className="accent-green-500 outline-none"
+            className="accent-[#406be9] outline-none"
           />
           <h3 className="pl-4 font-epilogue font-semibold text-[16px] text-white text-left">
             Send the Money Equally
           </h3>
         </label>
         {sent && (
-          <div className="absolute z-40 -top-20 left-0 right-0 mx-auto bg-[#4acd8d] opacity-90 border-[2px] border-white w-[80%] h-16 rounded-lg flex justify-center items-center">
+          <div className="absolute z-40 -top-20 left-0 right-0 mx-auto bg-[#406ae986] opacity-90 border-[2px] border-white w-[80%] h-16 rounded-lg flex justify-center items-center">
             <p className="font-epilogue font-semibold text-[16px] leading-[26px] text-white">
               Transaction has been Completed
             </p>
@@ -95,11 +97,11 @@ export default function Multisender() {
             <CustomButton
               title="Send ETH"
               btnType="submit"
-              styles="bg-green-500 outline-none"
+              styles="bg-[#406be9]/80 outline-none hover:bg-[#406be9]"
             />
             <button
               onClick={handleClick}
-              className="size-10 flex justify-center items-center aspect-square rounded-sm bg-green-500/80 hover:bg-green-500 outline-none"
+              className="size-10 flex justify-center items-center aspect-square rounded-sm bg-[#406be9]/80 hover:bg-[#406be9] outline-none"
             >
               <FontAwesomeIcon className="flex-1 size-4 p-2" icon={faPlus} />
             </button>

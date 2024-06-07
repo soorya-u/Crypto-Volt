@@ -1,33 +1,34 @@
-import { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/primitives/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/primitives/carousel";
 
-import { DisplayCampaigns } from "@/components/custom";
-import { useStateContext } from "@/context/thirdweb";
-import { CampaignType } from "@/types/context";
-
-const Home = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [campaigns, setCampaigns] = useState<CampaignType[]>([]);
-
-  const { address, contract, getCampaigns } = useStateContext();
-
-  const fetchCampaigns = async () => {
-    setIsLoading(true);
-    const data = await getCampaigns();
-    setCampaigns(data);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    if (contract) fetchCampaigns();
-  }, [address, contract]);
-
+export default function Home() {
   return (
-    <DisplayCampaigns
-      title="All Campaigns"
-      isLoading={isLoading}
-      campaigns={campaigns}
-    />
+    <div className="flex flex-col justify-center items-center gap-8 mt-10 w-full md-lg:w-[46%]">
+      <h1 className="text-[#406be9] text-6xl font-major font-extrabold text-center text-wrap leading-tight">
+        Crypto Volt
+      </h1>
+      <p className=" font-epilogue text-lg text-center md-lg:text-left">
+        "Crypto’s Grace, Changing Every Place!"
+      </p>
+      <Carousel className="w-full max-w-xs">
+        <CarouselContent>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <CarouselItem key={index}>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <span className="text-4xl font-semibold">{index + 1}</span>
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+    </div>
   );
-};
-
-export default Home;
+}

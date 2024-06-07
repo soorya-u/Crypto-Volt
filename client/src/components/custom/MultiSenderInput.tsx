@@ -5,6 +5,7 @@ import FormField from "./FormField";
 type InputType = {
   address: string;
   amount: string;
+  name: string;
 };
 
 type MultiSenderProps = {
@@ -22,7 +23,10 @@ export default function MultiSenderInput({
   total,
   isEqualAmount,
 }: MultiSenderProps) {
-  const handleChange = (type: "address" | "amount", newValue: string) => {
+  const handleChange = (
+    type: "address" | "amount" | "name",
+    newValue: string
+  ) => {
     setValue((prev) =>
       prev.map((item, index) =>
         index === idx ? { ...item, [type]: newValue } : item
@@ -38,6 +42,12 @@ export default function MultiSenderInput({
   return (
     <div className="flex items-center gap-2">
       <div className="flex justify-center items-center gap-y-6 gap-x-3 p-2 flex-wrap">
+        <FormField
+          inputType="text"
+          placeholder="Enter the Name..."
+          value={value.name}
+          handleChange={(e) => handleChange("name", e.target.value)}
+        />
         <FormField
           inputType="text"
           placeholder="Enter the Address..."

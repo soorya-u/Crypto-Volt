@@ -22,7 +22,7 @@ const Navbar = () => {
           className="flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] text-white bg-transparent outline-none"
         />
 
-        <div className="w-[72px] h-full rounded-[20px] bg-[#4acd8d] flex justify-center items-center cursor-pointer">
+        <div className="w-[72px] h-full rounded-[20px] bg-[#406be9] flex justify-center items-center cursor-pointer">
           <img
             src={search}
             alt="search"
@@ -41,16 +41,6 @@ const Navbar = () => {
             else connect();
           }}
         />
-
-        <Link to="/profile">
-          <div className="w-[52px] h-[52px] rounded-full bg-[#2c2f32] flex justify-center items-center cursor-pointer">
-            <img
-              src={thirdweb}
-              alt="user"
-              className="w-[60%] h-[60%] object-contain"
-            />
-          </div>
-        </Link>
       </div>
 
       {/* Small screen navigation */}
@@ -94,11 +84,9 @@ const Navbar = () => {
                   {...link}
                   isActive={isActive}
                   handleClick={() => {
-                    if (!link.disabled) {
-                      if (link.name === "Logout") return disconnect();
-                      setIsActive(link.name);
-                      navigate(link.link);
-                    }
+                    if (link.name === "Logout") return disconnect();
+                    setIsActive(link.name);
+                    navigate(link.link);
                   }}
                 >
                   {Icons[idx]}

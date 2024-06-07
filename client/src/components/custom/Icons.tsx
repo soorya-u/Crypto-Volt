@@ -6,10 +6,12 @@ import {
   faUser,
   faBorderAll,
   faArrowRightFromBracket,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import { PropsWithChildren } from "react";
 
 export const Icons = [
+  <FontAwesomeIcon className="size-[1.35rem]" icon={faHome} />,
   <FontAwesomeIcon className="size-[1.35rem]" icon={faBorderAll} />,
   <FontAwesomeIcon className="size-[1.35rem]" icon={faBullhorn} />,
   <FontAwesomeIcon className="size-[1.35rem]" icon={faMoneyBillTransfer} />,
@@ -36,7 +38,7 @@ export const Icon = ({
 }: Partial<IconProps & PropsWithChildren>) => (
   <div
     className={`w-[48px] h-[48px] rounded-[10px] ${
-      isActive && isActive === name && "bg-[#2c2f32] [&_path]:fill-green-500"
+      isActive && isActive === name && "bg-[#120e1f] [&_path]:fill-[#406be9]"
     } flex justify-center items-center ${
       !disabled && "cursor-pointer"
     } ${styles}`}
