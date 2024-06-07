@@ -40,7 +40,7 @@ const FormField = ({
           rows={10}
           placeholder={placeholder}
           disabled={disabled}
-          className="py-[15px] backdrop-blur-sm sm:px-[25px] px-[15px] bg-black/40 outline-none border-[1px] border-[#3a3a43]  font-epilogue text-white text-[14px] placeholder:text-[#677087] rounded-[10px] sm:min-w-[300px] hover:border-green-500/60 focus:border-green-500 disabled:opacity-60 disabled:hover:border-[#3a3a43]"
+          className="py-[15px] backdrop-blur-sm sm:px-[25px] px-[15px] bg-black/40 outline-none border-[1px] border-[#3a3a43]  font-epilogue text-white text-[14px] placeholder:text-[#677087] rounded-[10px] sm:min-w-[300px] hover:border-[#406be9]/60 focus:border-[#406be9] disabled:opacity-60 disabled:hover:border-[#3a3a43]"
         />
       ) : (
         <input
@@ -51,7 +51,7 @@ const FormField = ({
           step="0.1"
           placeholder={placeholder}
           disabled={disabled}
-          className="py-[15px] backdrop-blur-sm sm:px-[25px] px-[15px] bg-black/40 outline-none border-[1px] border-[#3a3a43]  font-epilogue text-white text-[14px] placeholder:text-[#677087] rounded-[10px] sm:min-w-[300px] hover:border-green-500/60 focus:border-green-500 disabled:opacity-60 disabled:hover:border-[#3a3a43]"
+          className="py-[15px] backdrop-blur-sm sm:px-[25px] px-[15px] bg-black/40 outline-none border-[1px] border-[#3a3a43]  font-epilogue text-white text-[14px] placeholder:text-[#677087] rounded-[10px] sm:min-w-[300px] hover:border-[#406be9]/60 focus:border-[#406be9] disabled:opacity-60 disabled:hover:border-[#3a3a43]"
         />
       )}
     </label>

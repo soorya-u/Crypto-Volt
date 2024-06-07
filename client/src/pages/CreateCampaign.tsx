@@ -114,7 +114,7 @@ const CreateCampaign = () => {
           <CustomButton
             btnType="submit"
             title="Submit new campaign"
-            styles="bg-[#1dc071]"
+            styles="bg-[#406be9]/80 outline-none hover:bg-[#406be9]"
           />
         </div>
       </form>

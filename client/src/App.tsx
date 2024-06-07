@@ -14,12 +14,18 @@ export default function App() {
   const location = useLocation();
   return (
     <main
-      style={{
-        background: location.pathname === "/" ? `url(${img})` : "#141025",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-      }}
-      className="relative p-4 min-h-screen flex flex-row w-full"
+      style={
+        location.pathname === "/"
+          ? {
+              backgroundImage: `url(${img})`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }
+          : {
+              backgroundColor: "#141025",
+            }
+      }
+      className="relative p-4 min-h-screen flex flex-row w-full bg-center bg-cover"
     >
       <div className="sm:flex hidden mr-7 relative">
         <Sidebar />
