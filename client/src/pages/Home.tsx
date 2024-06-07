@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { DisplayCampaigns } from "@/components/custom";
-import { useStateContext } from "@/context";
+import { useStateContext } from "@/context/thirdweb";
 import { CampaignType } from "@/types/context";
 
 const Home = () => {

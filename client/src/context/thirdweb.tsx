@@ -45,7 +45,7 @@ const StateContext = createContext<StateContextProps>(defaultArgs);
 
 export const StateContextProvider = ({
   children,
-}: PropsWithChildren<ReactNode>) => {
+}: PropsWithChildren) => {
   const contractId = import.meta.env.VITE_CONTRACT_ID;
   const { data: contract } = useContract(`${contractId}`);
 

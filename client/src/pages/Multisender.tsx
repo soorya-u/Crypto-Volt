@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import { useStateContext } from "@/context";
+import { useStateContext } from "@/context/thirdweb";
 import { CustomButton, MultiSenderInput } from "@/components/custom";
 
 type InputType = {
