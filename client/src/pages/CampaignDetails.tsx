@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { useStateContext } from "../context";
-import { CountBox, CustomButton, Loader } from "../components/custom";
-import { calculateBarPercentage, daysLeft } from "../utils";
-import { thirdweb } from "../assets";
+import { useStateContext } from "@/context";
+import { CountBox, CustomButton, Loader } from "@/components/custom";
+import { calculateBarPercentage, daysLeft } from "@/utils";
+import { thirdweb } from "@/assets";
 
 const CampaignDetails = () => {
   const { state } = useLocation();
