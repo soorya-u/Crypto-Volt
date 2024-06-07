@@ -3,7 +3,7 @@ import { CampaignDetails, CreateCampaign, Home, Profile, Multisender } from "./p
 import { Navbar, Sidebar } from "./components/custom";
 export default function App() {
   return (
-    <main className="relative sm:-8 p-4 bg-[#13131a] min-h-screen flex flex-row">
+    <main className="relative sm:-8 p-4 min-h-screen flex flex-row">
       <div className="sm:flex hidden mr-10 relative">
         <Sidebar />
       </div>
