@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import { useStateContext } from "../context";
-import { CustomButton, MultiSenderInput } from "../components";
+import { CustomButton, MultiSenderInput } from "../components/custom";
 
 type InputType = {
   address: string;

@@ -1,5 +1,5 @@
-import { tagType, thirdweb } from '../assets';
-import { daysLeft } from "../utils";
+import { tagType, thirdweb } from '@/assets';
+import { daysLeft } from "@/utils";
 
 type FundCardProps = {
   owner: string;

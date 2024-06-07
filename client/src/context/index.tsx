@@ -1,5 +1,4 @@
-import { useContext, createContext, PropsWithChildren } from "react";
-
+import { useContext, createContext, PropsWithChildren, ReactNode } from "react";
 import {
   useAddress,
   useContract,
@@ -10,13 +9,43 @@ import {
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 
+import { CampaignType, DonationType, FormType } from "@/types/context";
+
 const metamaskConfig = metamaskWallet();
 
-const defaultArgs: any = {};
+interface StateContextProps {
+  address: string | undefined;
+  createCampaign: (form: FormType) => Promise<void>;
+  contract: any;
+  connect: () => void;
+  disconnect: () => void;
+  getCampaigns: () => Promise<CampaignType[]>;
+  getUserCampaigns: () => Promise<CampaignType[]>;
+  donate: (pId: string, name: string, amount: string) => Promise<any>;
+  getDonations: (pId: string) => Promise<DonationType[]>;
+  multiSenderByValue: (addresses: string[], amounts: string[]) => Promise<any>;
+  multiSenderEqually: (addresses: string[], amount: string) => Promise<any>;
+}
 
-const StateContext = createContext(defaultArgs);
+const defaultArgs: StateContextProps = {
+  address: undefined,
+  createCampaign: async () => {},
+  contract: null,
+  connect: () => {},
+  disconnect: () => {},
+  getCampaigns: async () => [],
+  getUserCampaigns: async () => [],
+  donate: async () => {},
+  getDonations: async () => [],
+  multiSenderByValue: async () => {},
+  multiSenderEqually: async () => {},
+};
 
-export const StateContextProvider = (props: PropsWithChildren) => {
+const StateContext = createContext<StateContextProps>(defaultArgs);
+
+export const StateContextProvider = ({
+  children,
+}: PropsWithChildren<ReactNode>) => {
   const contractId = import.meta.env.VITE_CONTRACT_ID;
   const { data: contract } = useContract(`${contractId}`);
 
@@ -31,20 +60,11 @@ export const StateContextProvider = (props: PropsWithChildren) => {
 
   const metaMaskConnect = () => connect(metamaskConfig);
 
-  type FormType = {
-    name: string;
-    title: string;
-    description: string;
-    target: string;
-    deadline: string;
-    image: string;
-  };
-
   const publishCampaign = async (form: FormType) => {
     try {
       const data = await createCampaign({
         args: [
-          address, //owner,
+          address, // owner
           form.title,
           form.description,
           form.target,
@@ -55,82 +75,87 @@ export const StateContextProvider = (props: PropsWithChildren) => {
 
       console.log("Contract call success", data);
     } catch (err) {
-      console.log("Contract call failed", err);
+      console.error("Contract call failed", err);
     }
   };
 
-  const getCampaigns = async () => {
-    const campaigns = await contract?.call("getCampaigns");
-
-    const parsedCampaigns = campaigns.map((c: any, idx: number) => ({
-      owner: c.owner,
-      title: c.title,
-      description: c.description,
-      target: ethers.utils.formatEther(c.target.toString()),
-      deadline: c.deadline.toNumber(),
-      amountCollected: ethers.utils.formatEther(c.amountCollected.toString()),
-      image: c.image,
-      pId: idx,
-    }));
-
-    return parsedCampaigns;
+  const getCampaigns = async (): Promise<CampaignType[]> => {
+    try {
+      const campaigns = await contract?.call("getCampaigns");
+      return campaigns.map((c: any, idx: number) => ({
+        owner: c.owner,
+        title: c.title,
+        description: c.description,
+        target: ethers.utils.formatEther(c.target.toString()),
+        deadline: c.deadline.toNumber(),
+        amountCollected: ethers.utils.formatEther(c.amountCollected.toString()),
+        image: c.image,
+        pId: idx,
+      }));
+    } catch (error) {
+      console.error("Failed to fetch campaigns", error);
+      return [];
+    }
   };
 
-  const getUserCampaigns = async () => {
+  const getUserCampaigns = async (): Promise<CampaignType[]> => {
     const allCampaigns = await getCampaigns();
-
-    const filteredCampaigns = allCampaigns.filter(
-      (c: any) => c.owner === address
-    );
-    return filteredCampaigns;
+    return allCampaigns.filter((c) => c.owner === address);
   };
 
   const donate = async (pId: string, name: string, amount: string) => {
-    const value = ethers.utils.parseEther(amount);
-
-    const data = await contract?.call("donateToCampaign", [+pId, name], {
-      value,
-    });
-
-    return data;
+    try {
+      const value = ethers.utils.parseEther(amount);
+      const data = await contract?.call("donateToCampaign", [+pId, name], {
+        value,
+      });
+      return data;
+    } catch (error) {
+      console.error("Donation failed", error);
+    }
   };
 
-  const getDonations = async (pId: string) => {
-    const donations = await contract?.call("getDonators", [+pId]);
-
-    const parsedDonations = donations.map((d: any) => ({
-      donatorAddress: d.donator,
-      donatorName: d.name,
-      donation: ethers.utils.formatEther(d.amount).toString(),
-    }));
-
-    return parsedDonations;
+  const getDonations = async (pId: string): Promise<DonationType[]> => {
+    try {
+      const donations = await contract?.call("getDonators", [+pId]);
+      return donations.map((d: any) => ({
+        donatorAddress: d.donator,
+        donatorName: d.name,
+        donation: ethers.utils.formatEther(d.amount).toString(),
+      }));
+    } catch (error) {
+      console.error("Failed to fetch donations", error);
+      return [];
+    }
   };
 
-  const multiSenderByValue = async (address: string[], amount: string[]) => {
-    const value = amount.map((v) => ethers.utils.parseEther(`${v}`));
-    const sum = amount.reduce(
-      (accumulator, currentValue) => accumulator + +currentValue,
-      0
-    );
+  const multiSenderByValue = async (addresses: string[], amounts: string[]) => {
+    try {
+      const value = amounts.map((v) => ethers.utils.parseEther(`${v}`));
+      const sum = amounts.reduce((acc, curr) => acc + +curr, 0);
+      const totalSum = ethers.utils.parseEther(`${sum}`);
 
-    const totalSum = ethers.utils.parseEther(`${sum}`);
-
-    const data = await contract?.call("multiSenderByValue", [address, value], {
-      value: totalSum,
-    });
-
-    return data;
+      const data = await contract?.call(
+        "multiSenderByValue",
+        [addresses, value],
+        { value: totalSum }
+      );
+      return data;
+    } catch (error) {
+      console.error("Multi-sender by value failed", error);
+    }
   };
 
-  const multiSenderEqually = async (address: string[], amount: string) => {
-    const totalSum = ethers.utils.parseEther(`${+amount * address.length}`);
-
-    const data = await contract?.call("multiSenderEqually", [address], {
-      value: totalSum,
-    });
-
-    return data;
+  const multiSenderEqually = async (addresses: string[], amount: string) => {
+    try {
+      const totalSum = ethers.utils.parseEther(`${+amount * addresses.length}`);
+      const data = await contract?.call("multiSenderEqually", [addresses], {
+        value: totalSum,
+      });
+      return data;
+    } catch (error) {
+      console.error("Multi-sender equally failed", error);
+    }
   };
 
   return (
@@ -140,16 +165,16 @@ export const StateContextProvider = (props: PropsWithChildren) => {
         createCampaign: publishCampaign,
         contract,
         connect: metaMaskConnect,
+        disconnect,
         getCampaigns,
         getUserCampaigns,
         donate,
         getDonations,
         multiSenderByValue,
         multiSenderEqually,
-        disconnect,
       }}
     >
-      {props.children}
+      {children}
     </StateContext.Provider>
   );
 };

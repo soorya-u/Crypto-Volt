@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 
-import { DisplayCampaigns } from "../components";
-import { useStateContext } from "../context";
+import { DisplayCampaigns } from "@/components/custom";
+import { useStateContext } from "@/context";
+import { CampaignType } from "@/types/context";
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [campaigns, setCampaigns] = useState([]);
+  const [campaigns, setCampaigns] = useState<CampaignType[]>([]);
 
   const { address, contract, getUserCampaigns } = useStateContext();
 

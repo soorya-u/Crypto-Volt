@@ -1,11 +1,10 @@
-import React from "react";
-
 type ButtonProps = {
   btnType: "submit" | "reset" | "button" | undefined;
   title: string;
   handleClick: () => void;
   styles: string;
 };
+
 const CustomButton = ({
   btnType,
   title,
