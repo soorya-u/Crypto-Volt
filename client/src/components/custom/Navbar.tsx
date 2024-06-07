@@ -5,6 +5,7 @@ import { useStateContext } from "@/context/thirdweb";
 import { CustomButton } from "./";
 import { logo, menu, search, thirdweb } from "@/assets";
 import { navlinks } from "@/constants";
+import { Icon, Icons } from "./Icons";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -71,14 +72,14 @@ const Navbar = () => {
 
         <div
           className={`absolute top-[60px] right-0 left-0 bg-[#1c1c24] z-10 shadow-secondary py-4 ${
-            !toggleDrawer ? "-translate-y-[100vh]" : "translate-y-0"
+            !toggleDrawer ? "-translate-y-[120vh]" : "translate-y-0"
           } transition-all duration-700`}
         >
           <ul className="mb-4">
-            {navlinks.map((link) => (
+            {navlinks.map((link, idx) => (
               <li
                 key={link.name}
-                className={`flex p-4 ${
+                className={`flex p-3 items-center ${
                   isActive === link.name && "bg-[#3a3a43]"
                 }`}
                 onClick={async () => {
@@ -88,15 +89,22 @@ const Navbar = () => {
                   navigate(link.link);
                 }}
               >
-                <img
-                  src={link.imgUrl}
-                  alt={link.name}
-                  className={`w-[24px] h-[24px] object-contain ${
-                    isActive === link.name ? "grayscale-0" : "grayscale"
-                  }`}
-                />
+                <Icon
+                  key={link.name}
+                  {...link}
+                  isActive={isActive}
+                  handleClick={() => {
+                    if (!link.disabled) {
+                      if (link.name === "Logout") return disconnect();
+                      setIsActive(link.name);
+                      navigate(link.link);
+                    }
+                  }}
+                >
+                  {Icons[idx]}
+                </Icon>
                 <p
-                  className={`ml-[20px] font-epilogue font-semibold text-[14px] ${
+                  className={`ml-[20px] font-epilogue font-semibold text-base ${
                     isActive === link.name ? "text-[#1dc071]" : "text-[#808191]"
                   }`}
                 >

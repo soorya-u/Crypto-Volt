@@ -7,4 +7,3 @@ export { default as DisplayCampaigns } from "./DisplayCampaigns";
 export { default as FundCard } from "./FundCard";
 export { default as CountBox } from "./CountBox";
 export { default as MultiSenderInput } from "./MultiSenderInput";
-export { default as ThemeToggler } from "./ThemeToggler";
