@@ -50,7 +50,7 @@ const CampaignDetails = () => {
           />
           <div className="relative w-full h-[5px] bg-[#3a3a43] mt-2">
             <div
-              className="absolute h-full bg-[#4acd8d]"
+              className="absolute h-full bg-[#406be9]"
               style={{
                 width: `${calculateBarPercentage(
                   state.target,

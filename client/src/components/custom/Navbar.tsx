@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
-      <div className="lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] bg-[#1c1c24] rounded-[100px]">
+      <div className="lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] bg-[#141025] border border-white/40 rounded-[100px]">
         <input
           type="text"
           placeholder="Search for campaigns"
@@ -61,16 +61,16 @@ const Navbar = () => {
         />
 
         <div
-          className={`absolute top-[60px] right-0 left-0 bg-[#1c1c24] z-10 shadow-secondary py-4 ${
+          className={`absolute top-[60px] right-0 left-0 bg-[#141025] z-10 border border-white/30 rounded-md py-4 ${
             !toggleDrawer ? "-translate-y-[120vh]" : "translate-y-0"
           } transition-all duration-700`}
         >
-          <ul className="mb-4">
+          <ul>
             {navlinks.map((link, idx) => (
               <li
                 key={link.name}
                 className={`flex p-3 items-center ${
-                  isActive === link.name && "bg-[#3a3a43]"
+                  isActive === link.name && "bg-[#141025]"
                 }`}
                 onClick={async () => {
                   if (link.name === "Logout") return disconnect();
@@ -106,7 +106,7 @@ const Navbar = () => {
             <CustomButton
               btnType="button"
               title={address ? "Create a campaign" : "Connect"}
-              styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
+              styles={"bg-transparent hover:bg-neutral-700/20"}
               handleClick={() => {
                 if (address) navigate("create-campaign");
                 else connect();
