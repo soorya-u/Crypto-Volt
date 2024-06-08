@@ -1,4 +1,4 @@
-import Autoplay from "embla-carousel-autoplay"
+import Autoplay from "embla-carousel-autoplay";
 
 import { Card, CardContent } from "@/components/primitives/card";
 import {
@@ -6,6 +6,13 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/primitives/carousel";
+
+const CarouselContents: { image: string; description: string }[] = [
+  {
+    image: "",
+    description: "",
+  },
+];
 
 export default function Home() {
   return (
@@ -29,13 +36,11 @@ export default function Home() {
         className="w-full max-w-xs"
       >
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {CarouselContents.map((_, index) => (
             <CarouselItem key={index}>
               <div className="p-1">
-                <Card>
-                  <CardContent className="flex aspect-square items-center justify-center p-6">
-                    <span className="text-4xl font-semibold">{index + 1}</span>
-                  </CardContent>
+                <Card className="bg-transparent border-none">
+                  <CardContent className="flex aspect-square items-center justify-center p-6"></CardContent>
                 </Card>
               </div>
             </CarouselItem>

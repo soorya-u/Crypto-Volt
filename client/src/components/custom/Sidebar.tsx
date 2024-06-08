@@ -10,7 +10,6 @@ import logo from "@/assets/logo.png";
 const Sidebar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("Home");
-  const [isNavigationVisible, setIsNavigationVisible] = useState(false);
   const { disconnect } = useStateContext();
 
   return (
@@ -45,15 +44,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-{
-  /* {!isActive ? (
-      <img src={imgUrl} alt="fund_logo" className="w-1/2 h-1/2" />
-    ) : (
-      <img
-        src={imgUrl}
-        alt="fund_logo"
-        className={`w-1/2 h-1/2 ${isActive !== name && "grayscale"}`}
-      />
-    )} */
-}

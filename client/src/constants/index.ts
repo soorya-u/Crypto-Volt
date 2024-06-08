@@ -17,14 +17,6 @@ export const navlinks: NavLinks[] = [
     link: "/create-campaign",
   },
   {
-    name: "MultiSender",
-    link: "/multi-sender",
-  },
-  {
-    name: "Withdraw",
-    link: "/",
-  },
-  {
     name: "Profile",
     link: "/profile",
   },
