@@ -38,7 +38,7 @@ export const Icon = ({
 }: Partial<IconProps & PropsWithChildren>) => (
   <div
     className={`w-[48px] h-[48px] rounded-[10px] ${
-      isActive && isActive === name && "bg-[#120e1f] [&_path]:fill-[#406be9]"
+      isActive && isActive === name && "bg-[#291f49] [&_path]:fill-[#406be9]"
     } flex justify-center items-center ${
       !disabled && "cursor-pointer"
     } ${styles}`}
