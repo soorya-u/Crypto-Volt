@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center gap-8 mt-10 w-full md-lg:w-[46%]">
       <h1 className="text-[#406be9] text-6xl font-major font-extrabold text-center text-wrap leading-tight">
-        crypto volt
+        Crypto Volt
       </h1>
       <p className=" font-epilogue text-lg text-center md-lg:text-left">
         "Crypto’s Grace, Changing Every Place!"

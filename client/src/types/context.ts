@@ -18,6 +18,7 @@ export type CampaignType = {
   amountCollected: string;
   image: string;
   pId: number;
+  name: string;
 };
 
 export type DonationType = {

@@ -63,6 +63,7 @@ export const StateContextProvider = ({ children }: PropsWithChildren) => {
       const data = await createCampaign({
         args: [
           address, // owner
+          form.name,
           form.title,
           form.description,
           form.target,
@@ -89,6 +90,7 @@ export const StateContextProvider = ({ children }: PropsWithChildren) => {
         amountCollected: ethers.utils.formatEther(c.amountCollected.toString()),
         image: c.image,
         pId: idx,
+        name: c.name,
       }));
     } catch (error) {
       console.error("Failed to fetch campaigns", error);

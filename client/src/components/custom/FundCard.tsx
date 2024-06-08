@@ -1,4 +1,4 @@
-import { tagType, thirdweb } from '@/assets';
+import { tagType, thirdweb } from "@/assets";
 import { daysLeft } from "@/utils";
 
 type FundCardProps = {
@@ -25,7 +25,7 @@ const FundCard = ({
 
   return (
     <div
-      className="sm:w-[288px] w-full rounded-[15px] bg-[#1c1c24] cursor-pointer"
+      className="sm:w-[288px] w-full rounded-[15px] bg-[#141025] border border-white/40 shadow shadow-white/40 cursor-pointer"
       onClick={handleClick}
     >
       <img
