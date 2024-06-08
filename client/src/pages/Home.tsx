@@ -1,3 +1,5 @@
+import Autoplay from "embla-carousel-autoplay"
+
 import { Card, CardContent } from "@/components/primitives/card";
 import {
   Carousel,
@@ -14,7 +16,18 @@ export default function Home() {
       <p className=" font-epilogue text-lg text-center md-lg:text-left">
         "Crypto’s Grace, Changing Every Place!"
       </p>
-      <Carousel className="w-full max-w-xs">
+      <Carousel
+        plugins={[
+          Autoplay({
+            delay: 2000,
+          }),
+        ]}
+        opts={{
+          loop: true,
+          align: "center",
+        }}
+        className="w-full max-w-xs"
+      >
         <CarouselContent>
           {Array.from({ length: 5 }).map((_, index) => (
             <CarouselItem key={index}>
