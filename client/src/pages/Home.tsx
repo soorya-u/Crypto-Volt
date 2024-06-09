@@ -1,4 +1,5 @@
 import Autoplay from "embla-carousel-autoplay";
+import metamask from "@/assets/metamask.png";
 
 import { Card, CardContent } from "@/components/primitives/card";
 import {
@@ -7,10 +8,16 @@ import {
   CarouselItem,
 } from "@/components/primitives/carousel";
 
-const CarouselContents: { image: string; description: string }[] = [
+const CarouselContents: {
+  title: string;
+  image: string;
+  description: string;
+}[] = [
   {
-    image: "",
-    description: "",
+    title: "MetaMask Integration",
+    image: metamask,
+    description:
+      "The platform integrates with MetaMask for secure transactions.",
   },
 ];
 
@@ -36,11 +43,19 @@ export default function Home() {
         className="w-full max-w-xs"
       >
         <CarouselContent>
-          {CarouselContents.map((_, index) => (
+          {CarouselContents.map((c, index) => (
             <CarouselItem key={index}>
               <div className="p-1">
-                <Card className="bg-transparent border-none">
-                  <CardContent className="flex aspect-square items-center justify-center p-6"></CardContent>
+                <Card className=" border border-white/40 bg-transparent">
+                  <CardContent className="flex flex-col aspect-square items-center justify-center gap-3 p-6">
+                    <h1 className="text-center text-lg font-extrabold font-major">
+                      {c.title}
+                    </h1>
+                    <img className="size-24" src={c.image} />
+                    <p className="text-center text-base font-epilogue">
+                      {c.description}
+                    </p>
+                  </CardContent>
                 </Card>
               </div>
             </CarouselItem>
