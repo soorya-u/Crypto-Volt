@@ -6,140 +6,126 @@ contract Donations {
         address donator;
         string name;
         uint256 amount;
-        bool hasVoted;
+    }
+
+    struct Payment {
+        string name;
+        address account;
+        uint256 amount;
     }
 
     struct Campaign {
-        string uuid;
         address owner;
-        string name;
         string title;
         string description;
         uint256 target;
         uint256 deadline;
         uint256 amountCollected;
         string image;
-        uint256 noOfDonations;
-        uint256 noOfRequests;
+        Donation[] donations;
     }
 
-    struct SpendRequest {
-        string description;
-        uint256 amount;
-        uint256 grantedVotes;
-        uint256 totalVotes;
-    }
-
-    mapping(string => Campaign) public campaigns;
-    mapping(string => Donation[]) public donations;
-    mapping(string => SpendRequest[]) public spendRequests;
+    mapping(uint256 => Campaign) public campaigns;
+    mapping(uint256 => Payment) public payments;
 
     uint256 public numberOfCampaigns = 0;
+    uint256 public numberOfPayments = 0;
 
-    receive() external payable {}
+    function multiSenderEqually(
+        string[] calldata _name,
+        address[] calldata _address
+    ) external payable {
+        uint16 length = uint16(_address.length);
+        uint256 value = msg.value / length;
 
-    fallback() external payable {}
+        for (uint16 i = 0; i < length; i++) {
+            (bool sent, ) = payable(_address[i]).call{value: value}("");
+            if (!sent) break;
+            payments[numberOfPayments] = Payment({
+                name: _name[i],
+                account: _address[i],
+                amount: value
+            });
+            numberOfPayments++;
+        }
+    }
+
+    function multiSenderByValue(
+        string[] calldata _name,
+        address[] calldata _address,
+        uint256[] calldata _value
+    ) external payable {
+        uint16 length = uint16(_address.length);
+
+        for (uint16 i = 0; i < length; i++) {
+            (bool sent, ) = payable(_address[i]).call{value: _value[i]}("");
+            if (!sent) break;
+            payments[numberOfPayments] = Payment({
+                name: _name[i],
+                account: _address[i],
+                amount: _value[i]
+            });
+            numberOfPayments++;
+        }
+    }
+
+    function getAllPayments() public view returns (Payment[] memory) {
+        Payment[] memory allPayments = new Payment[](numberOfPayments);
+
+        for (uint256 i = 0; i < numberOfPayments; i++) {
+            Payment memory item = payments[i];
+            allPayments[i] = item;
+        }
+        return allPayments;
+    }
 
     function createCampaign(
-        string calldata _id,
         address _owner,
-        string calldata _name,
-        string calldata _title,
-        string calldata _description,
+        string memory _title,
+        string memory _description,
         uint256 _target,
         uint256 _deadline,
-        string calldata _image
-    ) public returns (string calldata) {
+        string memory _image
+    ) public returns (uint256) {
+        Campaign storage campaign = campaigns[numberOfCampaigns];
+
         require(
-            _deadline > block.timestamp,
+            campaign.deadline < block.timestamp,
             "The deadline should be a date in the future."
         );
 
-        Campaign storage campaign = campaigns[_id];
-        campaign.uuid = _id;
         campaign.owner = _owner;
-        campaign.name = _name;
+        campaign.title = _title;
         campaign.description = _description;
         campaign.target = _target;
         campaign.deadline = _deadline;
         campaign.amountCollected = 0;
         campaign.image = _image;
 
-        return _id;
+        numberOfCampaigns++;
+
+        return numberOfCampaigns - 1;
     }
 
     function donateToCampaign(
-        string calldata _id,
+        uint256 _id,
         string calldata _name
     ) public payable {
         uint256 amount = msg.value;
         Campaign storage campaign = campaigns[_id];
-        require(
-            block.timestamp < campaign.deadline,
-            "Campaign deadline has passed."
-        );
+        Donation memory donation = Donation({
+            donator: msg.sender,
+            name: _name,
+            amount: amount
+        });
 
-        int idx = -1;
-        Donation[] memory allDonations = new Donation[](campaign.noOfDonations);
-        allDonations = donations[_id];
+        campaign.donations.push(donation);
 
-        for (uint i = 0; i < campaign.noOfDonations; i++) {
-            if (allDonations[i].donator == msg.sender) {
-                idx = int(i);
-                break;
-            }
+        (bool sent, ) = payable(campaign.owner).call{value: amount}("");
+
+        if (sent) {
+            campaign.amountCollected += amount;
         }
-
-        if (idx == -1) {
-            Donation memory donation = Donation({
-                donator: msg.sender,
-                name: _name,
-                amount: amount,
-                hasVoted: false
-            });
-            donations[_id].push(donation);
-        } else {
-            allDonations[uint(idx)].amount += amount;
-        }
-
-        campaign.amountCollected += amount;
-    }
-
-    function voteForCampaign(
-        string calldata _campaignId,
-        uint256 _requestId,
-        bool _vote
-    ) public {
-        SpendRequest storage requests = spendRequests[_campaignId];
-        SpendRequest storage req = requests[_requestId];
-        require(!campaign.hasVoted[msg.sender], "You have already voted.");
-
-        if (_vote) {
-            campaign.trueVotes++;
-        } else {
-            campaign.falseVotes++;
-        }
-
-        campaign.hasVoted[msg.sender] = true;
-    }
-
-    function transferFunds(uint256 _id) public {
-        Campaign storage campaign = campaigns[_id];
-        require(
-            block.timestamp >= campaign.deadline,
-            "Campaign is still ongoing."
-        );
-        require(
-            campaign.trueVotes > campaign.falseVotes,
-            "Not enough true votes to transfer funds."
-        );
-        require(campaign.amountCollected > 0, "No funds to transfer.");
-
-        uint256 amount = campaign.amountCollected;
-        campaign.amountCollected = 0;
-
-        (bool success, ) = campaign.owner.call{value: amount}("");
-        require(success, "Transfer failed.");
     }
 
     function getDonators(uint256 _id) public view returns (Donation[] memory) {
@@ -155,9 +141,5 @@ contract Donations {
         }
 
         return allCampaigns;
-    }
-
-    function getBalance() public view returns (uint256) {
-        return address(this).balance;
     }
 }

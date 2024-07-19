@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMoneyBillTransfer,
   faBullhorn,
-  faFileInvoiceDollar,
   faUser,
   faBorderAll,
   faArrowRightFromBracket,
@@ -14,6 +13,7 @@ export const Icons = [
   <FontAwesomeIcon className="size-[1.35rem]" icon={faHome} />,
   <FontAwesomeIcon className="size-[1.35rem]" icon={faBorderAll} />,
   <FontAwesomeIcon className="size-[1.35rem]" icon={faBullhorn} />,
+  <FontAwesomeIcon className="size-[1.35rem]" icon={faMoneyBillTransfer} />,
   <FontAwesomeIcon className="size-[1.35rem]" icon={faUser} />,
   <FontAwesomeIcon className="size-[1.35rem]" icon={faArrowRightFromBracket} />,
 ];
