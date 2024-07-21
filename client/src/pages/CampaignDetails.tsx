@@ -40,20 +40,20 @@ const CampaignDetails = () => {
     <div>
       {isLoading && <Loader />}
 
-      <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
+      <div className="mt-10 flex w-full flex-col gap-[30px] md:flex-row">
         <div className="flex-1 flex-col">
           <img
             src={state.image}
             alt="campaign"
-            className="w-full h-[410px] object-cover rounded-xl"
+            className="h-[410px] w-full rounded-xl object-cover"
           />
-          <div className="relative w-full h-[5px] bg-[#3a3a43] mt-2">
+          <div className="relative mt-2 h-[5px] w-full bg-[#3a3a43]">
             <div
               className="absolute h-full bg-[#406be9]"
               style={{
                 width: `${calculateBarPercentage(
                   state.target,
-                  state.amountCollected
+                  state.amountCollected,
                 )}%`,
                 maxWidth: "100%",
               }}
@@ -61,7 +61,7 @@ const CampaignDetails = () => {
           </div>
         </div>
 
-        <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
+        <div className="flex w-full flex-wrap justify-between gap-[30px] md:w-[150px]">
           <CountBox title="Days Left" value={remainingDays} />
           <CountBox
             title={`Raised of ${state.target}`}
@@ -71,26 +71,26 @@ const CampaignDetails = () => {
         </div>
       </div>
 
-      <div className="mt-[60px] flex lg:flex-row flex-col gap-5">
-        <div className="flex-[2] flex flex-col gap-[40px]">
+      <div className="mt-[60px] flex flex-col gap-5 lg:flex-row">
+        <div className="flex flex-[2] flex-col gap-[40px]">
           <div>
-            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
+            <h4 className="font-epilogue text-[18px] font-semibold uppercase text-white">
               Creator
             </h4>
 
-            <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
-              <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#2c2f32] cursor-pointer">
+            <div className="mt-[20px] flex flex-row flex-wrap items-center gap-[14px]">
+              <div className="flex h-[52px] w-[52px] cursor-pointer items-center justify-center rounded-full bg-[#2c2f32]">
                 <img
                   src={thirdweb}
                   alt="user"
-                  className="w-[60%] h-[60%] object-contain"
+                  className="h-[60%] w-[60%] object-contain"
                 />
               </div>
               <div>
-                <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">
+                <h4 className="break-all font-epilogue text-[14px] font-semibold text-white">
                   {state.name} - {state.owner}
                 </h4>
-                <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">
+                <p className="mt-[4px] font-epilogue text-[12px] font-normal text-[#808191]">
                   10 Campaigns
                 </p>
               </div>
@@ -98,19 +98,19 @@ const CampaignDetails = () => {
           </div>
 
           <div>
-            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
+            <h4 className="font-epilogue text-[18px] font-semibold uppercase text-white">
               Story
             </h4>
 
             <div className="mt-[20px]">
-              <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">
+              <p className="text-justify font-epilogue text-[16px] font-normal leading-[26px] text-[#808191]">
                 {state.description}
               </p>
             </div>
           </div>
 
           <div>
-            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
+            <h4 className="font-epilogue text-[18px] font-semibold uppercase text-white">
               Donators
             </h4>
 
@@ -119,19 +119,19 @@ const CampaignDetails = () => {
                 donators.map((item, index) => (
                   <div
                     key={`${item.donator}-${index}`}
-                    className="flex justify-between items-center gap-4"
+                    className="flex items-center justify-between gap-4"
                   >
                     {/* TODO: Add Donator Name */}
-                    <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">
+                    <p className="break-ll font-epilogue text-[16px] font-normal leading-[26px] text-[#b2b3bd]">
                       {index + 1}. {item.donatorName} - {item.donatorAddress}
                     </p>
-                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">
+                    <p className="break-ll font-epilogue text-[16px] font-normal leading-[26px] text-[#808191]">
                       {item.donation}
                     </p>
                   </div>
                 ))
               ) : (
-                <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">
+                <p className="text-justify font-epilogue text-[16px] font-normal leading-[26px] text-[#808191]">
                   No donators yet. Be the first one!
                 </p>
               )}
@@ -140,19 +140,19 @@ const CampaignDetails = () => {
         </div>
 
         <div className="flex-1">
-          <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
+          <h4 className="font-epilogue text-[18px] font-semibold uppercase text-white">
             Fund
           </h4>
 
-          <div className="mt-[20px] flex flex-col p-4 bg-[#141025] border border-white/40  rounded-[10px]">
-            <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
+          <div className="mt-[20px] flex flex-col rounded-[10px] border border-white/40 bg-[#141025] p-4">
+            <p className="fount-medium text-center font-epilogue text-[20px] leading-[30px] text-[#808191]">
               Fund the campaign
             </p>
             <div className="mt-[30px] flex flex-col gap-4">
               <input
                 type="text"
                 placeholder="John Doe"
-                className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
+                className="w-full rounded-[10px] border-[1px] border-[#3a3a43] bg-transparent px-[15px] py-[10px] font-epilogue text-[18px] leading-[30px] text-white outline-none placeholder:text-[#4b5264] sm:px-[20px]"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -160,7 +160,7 @@ const CampaignDetails = () => {
                 type="number"
                 placeholder="ETH 0.1"
                 step="0.01"
-                className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
+                className="w-full rounded-[10px] border-[1px] border-[#3a3a43] bg-transparent px-[15px] py-[10px] font-epilogue text-[18px] leading-[30px] text-white outline-none placeholder:text-[#4b5264] sm:px-[20px]"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />

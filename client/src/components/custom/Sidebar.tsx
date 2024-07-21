@@ -13,16 +13,16 @@ const Sidebar = () => {
   const { disconnect } = useStateContext();
 
   return (
-    <div className="group flex justify-start items-center flex-col sticky top-5 h-[93vh]">
+    <div className="group sticky top-5 flex h-[93vh] flex-col items-center justify-start">
       <Link to="/">
         <img
-          className="size-[52px] bg-transparent hover:bg-[#000]/30 rounded-md"
+          className="size-[52px] rounded-md bg-transparent hover:bg-[#000]/30"
           src={logo}
         />
       </Link>
 
-      <div className="flex flex-col justify-between items-center bg-transparent rounded-[20px] w-[76px] py-4 mt-12  transition-all -translate-x-[15vw] duration-700 group-hover:translate-x-0">
-        <div className="flex flex-col justify-center items-center gap-3">
+      <div className="mt-12 flex w-[76px] -translate-x-[15vw] flex-col items-center justify-between rounded-[20px] bg-transparent py-4 transition-all duration-700 group-hover:translate-x-0">
+        <div className="flex flex-col items-center justify-center gap-3">
           {navlinks.map((link, idx) => (
             <Icon
               key={link.name}

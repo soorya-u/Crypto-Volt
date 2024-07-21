@@ -49,7 +49,7 @@ export const StateContextProvider = ({ children }: PropsWithChildren) => {
 
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
-    "createCampaign"
+    "createCampaign",
   );
 
   const address = useAddress();
@@ -138,7 +138,7 @@ export const StateContextProvider = ({ children }: PropsWithChildren) => {
       const data = await contract?.call(
         "multiSenderByValue",
         [addresses, value],
-        { value: totalSum }
+        { value: totalSum },
       );
       return data;
     } catch (error) {

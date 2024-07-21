@@ -4,11 +4,11 @@ type CountBoxProps = {
 };
 const CountBox = ({ title, value }: CountBoxProps) => {
   return (
-    <div className="flex flex-col items-center w-[150px] border border-white/20 rounded-lg ">
-      <h4 className="font-epilogue font-bold text-[30px] text-white p-3 bg-[#141025] rounded-t-[10px] w-full text-center truncate">
+    <div className="flex w-[150px] flex-col items-center rounded-lg border border-white/20">
+      <h4 className="w-full truncate rounded-t-[10px] bg-[#141025] p-3 text-center font-epilogue text-[30px] font-bold text-white">
         {value}
       </h4>
-      <p className="flex-1 flex justify-center items-center font-epilogue font-normal text-[16px] text-[#fff] bg-white/10 px-3 py-2 w-full rouned-b-[10px] text-center">
+      <p className="rouned-b-[10px] flex w-full flex-1 items-center justify-center bg-white/10 px-3 py-2 text-center font-epilogue text-[16px] font-normal text-[#fff]">
         {title}
       </p>
     </div>

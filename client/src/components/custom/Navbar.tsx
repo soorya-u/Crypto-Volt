@@ -14,24 +14,24 @@ const Navbar = () => {
   const { connect, address, disconnect } = useStateContext();
 
   return (
-    <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
-      <div className="lg:flex-1 flex flex-row max-w-[458px] py-2 pl-4 ml-16 pr-2 h-[52px] bg-[#141025] border border-white/40 rounded-[100px]">
+    <div className="mb-[35px] flex flex-col-reverse justify-between gap-6 md:flex-row">
+      <div className="ml-16 flex h-[52px] max-w-[458px] flex-row rounded-[100px] border border-white/40 bg-[#141025] py-2 pl-4 pr-2 lg:flex-1">
         <input
           type="text"
           placeholder="Search for campaigns"
-          className="flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] text-white bg-transparent outline-none"
+          className="flex w-full bg-transparent font-epilogue text-[14px] font-normal text-white outline-none placeholder:text-[#4b5264]"
         />
 
-        <div className="w-[72px] h-full rounded-[20px] bg-[#406be9] flex justify-center items-center cursor-pointer">
+        <div className="flex h-full w-[72px] cursor-pointer items-center justify-center rounded-[20px] bg-[#406be9]">
           <img
             src={search}
             alt="search"
-            className="w-[15px] h-[15px] object-contain"
+            className="h-[15px] w-[15px] object-contain"
           />
         </div>
       </div>
 
-      <div className="sm:flex hidden flex-row justify-end gap-4">
+      <div className="hidden flex-row justify-end gap-4 sm:flex">
         <CustomButton
           btnType="button"
           title={address ? "Create a campaign" : "Connect"}
@@ -44,24 +44,24 @@ const Navbar = () => {
       </div>
 
       {/* Small screen navigation */}
-      <div className="sm:hidden flex justify-between items-center relative">
-        <div className="w-[40px] h-[40px] rounded-[10px] bg-[#2c2f32] flex justify-center items-center cursor-pointer">
+      <div className="relative flex items-center justify-between sm:hidden">
+        <div className="flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-[10px] bg-[#2c2f32]">
           <img
             src={logo}
             alt="user"
-            className="w-[60%] h-[60%] object-contain"
+            className="h-[60%] w-[60%] object-contain"
           />
         </div>
 
         <img
           src={menu}
           alt="menu"
-          className="w-[34px] h-[34px] object-contain cursor-pointer"
+          className="h-[34px] w-[34px] cursor-pointer object-contain"
           onClick={() => setToggleDrawer((prev) => !prev)}
         />
 
         <div
-          className={`absolute top-[60px] right-0 left-0 bg-[#141025] z-10 border border-white/30 rounded-md py-4 ${
+          className={`absolute left-0 right-0 top-[60px] z-10 rounded-md border border-white/30 bg-[#141025] py-4 ${
             !toggleDrawer ? "-translate-y-[120vh]" : "translate-y-0"
           } transition-all duration-700`}
         >
@@ -69,7 +69,7 @@ const Navbar = () => {
             {navlinks.map((link, idx) => (
               <li
                 key={link.name}
-                className={`flex p-3 items-center ${
+                className={`flex items-center p-3 ${
                   isActive === link.name && "bg-[#141025]"
                 }`}
                 onClick={async () => {
@@ -92,7 +92,7 @@ const Navbar = () => {
                   {Icons[idx]}
                 </Icon>
                 <p
-                  className={`ml-[20px] font-epilogue font-semibold text-base ${
+                  className={`ml-[20px] font-epilogue text-base font-semibold ${
                     isActive === link.name ? "text-[#1dc071]" : "text-[#808191]"
                   }`}
                 >
@@ -102,7 +102,7 @@ const Navbar = () => {
             ))}
           </ul>
 
-          <div className="flex mx-4">
+          <div className="mx-4 flex">
             <CustomButton
               btnType="button"
               title={address ? "Create a campaign" : "Connect"}

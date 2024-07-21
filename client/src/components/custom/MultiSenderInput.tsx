@@ -25,12 +25,12 @@ export default function MultiSenderInput({
 }: MultiSenderProps) {
   const handleChange = (
     type: "address" | "amount" | "name",
-    newValue: string
+    newValue: string,
   ) => {
     setValue((prev) =>
       prev.map((item, index) =>
-        index === idx ? { ...item, [type]: newValue } : item
-      )
+        index === idx ? { ...item, [type]: newValue } : item,
+      ),
     );
   };
 
@@ -41,7 +41,7 @@ export default function MultiSenderInput({
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex justify-center items-center gap-y-6 gap-x-3 p-2 flex-wrap">
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-6 p-2">
         <FormField
           inputType="text"
           placeholder="Enter the Name..."
@@ -65,9 +65,9 @@ export default function MultiSenderInput({
       {total > 1 && (
         <button
           onClick={handleClick}
-          className="flex outline-none justify-center items-center aspect-square rounded-sm bg-red-500/80 hover:bg-red-500"
+          className="flex aspect-square items-center justify-center rounded-sm bg-red-500/80 outline-none hover:bg-red-500"
         >
-          <FontAwesomeIcon className="flex-1 size-4 p-2" icon={faMinus} />
+          <FontAwesomeIcon className="size-4 flex-1 p-2" icon={faMinus} />
         </button>
       )}
     </div>

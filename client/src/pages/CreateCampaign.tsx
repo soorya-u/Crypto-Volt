@@ -23,7 +23,7 @@ const CreateCampaign = () => {
     fieldName: string,
     e:
       | React.ChangeEvent<HTMLTextAreaElement>
-      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLInputElement>,
   ) => {
     setForm({ ...form, [fieldName]: e.target.value });
   };
@@ -47,17 +47,17 @@ const CreateCampaign = () => {
   };
 
   return (
-    <div className="flex justify-center items-center flex-col sm:p-10 p-4">
+    <div className="flex flex-col items-center justify-center p-4 sm:p-10">
       {isLoading && <Loader />}
-      <div className="flex justify-center items-center p-[16px] sm:min-w-[380px]">
-        <h1 className="font-epilogue font-bold sm:text-[25px] text-[18px] leading-[38px] text-white">
+      <div className="flex items-center justify-center p-[16px] sm:min-w-[380px]">
+        <h1 className="font-epilogue text-[18px] font-bold leading-[38px] text-white sm:text-[25px]">
           Start a Campaign
         </h1>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="w-full mt-[10px] flex flex-col gap-[30px]"
+        className="mt-[10px] flex w-full flex-col gap-[30px]"
       >
         <div className="flex flex-wrap gap-[40px]">
           <FormField
@@ -110,7 +110,7 @@ const CreateCampaign = () => {
           handleChange={(e) => handleFormFieldChange("image", e)}
         />
 
-        <div className="flex justify-center items-center mt-[40px]">
+        <div className="mt-[40px] flex items-center justify-center">
           <CustomButton
             btnType="submit"
             title="Submit new campaign"

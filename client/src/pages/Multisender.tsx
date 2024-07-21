@@ -51,16 +51,16 @@ export default function Multisender() {
 
   return (
     <>
-      <div className="relative flex flex-col gap-y-4 my-2">
-        <h1 className="pl-4 font-epilogue font-semibold text-[18px] text-white text-left">
+      <div className="relative my-2 flex flex-col gap-y-4">
+        <h1 className="pl-4 text-left font-epilogue text-[18px] font-semibold text-white">
           Multi-Sender
         </h1>
 
-        <h3 className="pl-4 font-epilogue font-semibold text-[16px] text-white text-left">
+        <h3 className="pl-4 text-left font-epilogue text-[16px] font-semibold text-white">
           Enter the Credentials and Amount to be Sent
         </h3>
 
-        <label htmlFor="isEqualSender" className="flex pl-4 items-center">
+        <label htmlFor="isEqualSender" className="flex items-center pl-4">
           <input
             value={`${isEqualAmount}`}
             onChange={() => setIsEqualAmount((prev) => !prev)}
@@ -68,21 +68,21 @@ export default function Multisender() {
             name="isEqualSender"
             className="accent-[#406be9] outline-none"
           />
-          <h3 className="pl-4 font-epilogue font-semibold text-[16px] text-white text-left">
+          <h3 className="pl-4 text-left font-epilogue text-[16px] font-semibold text-white">
             Send the Money Equally
           </h3>
         </label>
         {sent && (
-          <div className="absolute z-40 -top-20 left-0 right-0 mx-auto bg-[#406ae986] opacity-90 border-[2px] border-white w-[80%] h-16 rounded-lg flex justify-center items-center">
-            <p className="font-epilogue font-semibold text-[16px] leading-[26px] text-white">
+          <div className="absolute -top-20 left-0 right-0 z-40 mx-auto flex h-16 w-[80%] items-center justify-center rounded-lg border-[2px] border-white bg-[#406ae986] opacity-90">
+            <p className="font-epilogue text-[16px] font-semibold leading-[26px] text-white">
               Transaction has been Completed
             </p>
           </div>
         )}
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col w-full">
-        <div className="w-full flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex w-full flex-col">
+        <div className="flex w-full flex-col gap-4">
           {input.map((val, idx) => (
             <MultiSenderInput
               key={idx}
@@ -101,9 +101,9 @@ export default function Multisender() {
             />
             <button
               onClick={handleClick}
-              className="size-10 flex justify-center items-center aspect-square rounded-sm bg-[#406be9]/80 hover:bg-[#406be9] outline-none"
+              className="flex aspect-square size-10 items-center justify-center rounded-sm bg-[#406be9]/80 outline-none hover:bg-[#406be9]"
             >
-              <FontAwesomeIcon className="flex-1 size-4 p-2" icon={faPlus} />
+              <FontAwesomeIcon className="size-4 flex-1 p-2" icon={faPlus} />
             </button>
           </div>
         </div>

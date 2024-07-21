@@ -11,7 +11,7 @@ type FormFieldProps = {
   handleChange: (
     e:
       | React.ChangeEvent<HTMLTextAreaElement>
-      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLInputElement>,
   ) => void;
 };
 
@@ -26,9 +26,9 @@ const FormField = ({
   handleChange,
 }: Partial<FormFieldProps>) => {
   return (
-    <label className="flex-1 w-full flex flex-col">
+    <label className="flex w-full flex-1 flex-col">
       {labelName && (
-        <span className="font-epilogue font-medium text-[14px] leading-[22px] text-[#808191] mb-[10px]">
+        <span className="mb-[10px] font-epilogue text-[14px] font-medium leading-[22px] text-[#808191]">
           {labelName}
         </span>
       )}
@@ -40,7 +40,7 @@ const FormField = ({
           rows={10}
           placeholder={placeholder}
           disabled={disabled}
-          className="py-[15px] backdrop-blur-sm sm:px-[25px] px-[15px] bg-black/40 outline-none border-[1px] border-[#3a3a43]  font-epilogue text-white text-[14px] placeholder:text-[#677087] rounded-[10px] sm:min-w-[300px] hover:border-[#406be9]/60 focus:border-[#406be9] disabled:opacity-60 disabled:hover:border-[#3a3a43]"
+          className="rounded-[10px] border-[1px] border-[#3a3a43] bg-black/40 px-[15px] py-[15px] font-epilogue text-[14px] text-white outline-none backdrop-blur-sm placeholder:text-[#677087] hover:border-[#406be9]/60 focus:border-[#406be9] disabled:opacity-60 disabled:hover:border-[#3a3a43] sm:min-w-[300px] sm:px-[25px]"
         />
       ) : (
         <input
@@ -51,7 +51,7 @@ const FormField = ({
           step="0.1"
           placeholder={placeholder}
           disabled={disabled}
-          className="py-[15px] backdrop-blur-sm sm:px-[25px] px-[15px] bg-black/40 outline-none border-[1px] border-[#3a3a43]  font-epilogue text-white text-[14px] placeholder:text-[#677087] rounded-[10px] sm:min-w-[300px] hover:border-[#406be9]/60 focus:border-[#406be9] disabled:opacity-60 disabled:hover:border-[#3a3a43]"
+          className="rounded-[10px] border-[1px] border-[#3a3a43] bg-black/40 px-[15px] py-[15px] font-epilogue text-[14px] text-white outline-none backdrop-blur-sm placeholder:text-[#677087] hover:border-[#406be9]/60 focus:border-[#406be9] disabled:opacity-60 disabled:hover:border-[#3a3a43] sm:min-w-[300px] sm:px-[25px]"
         />
       )}
     </label>

@@ -25,13 +25,13 @@ export default function App() {
               backgroundColor: "#141025",
             }
       }
-      className="relative p-4 min-h-screen flex flex-row w-full bg-center bg-cover"
+      className="relative flex min-h-screen w-full flex-row bg-cover bg-center p-4"
     >
-      <div className="sm:flex hidden mr-7 relative">
+      <div className="relative mr-7 hidden sm:flex">
         <Sidebar />
       </div>
 
-      <div className="flex-1 max-sm:w-full max-w-[1280px] mx-auto sm:pr-5">
+      <div className="mx-auto max-w-[1280px] flex-1 max-sm:w-full sm:pr-5">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
