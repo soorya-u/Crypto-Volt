@@ -1,12 +1,12 @@
 import Autoplay from "embla-carousel-autoplay";
 import metamask from "@/assets/metamask.png";
 
-import { Card, CardContent } from "@/components/primitives/card";
+import { Card, CardContent } from "@/components/ui/card
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "@/components/primitives/carousel";
+} from "@/components/ui/carousel
 
 const CarouselContents: {
   title: string;
